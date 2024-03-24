@@ -1,20 +1,18 @@
 package Tabele;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "clienti")
 public class Clienti {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int client_id;
 
     private String nume;
-
-
     private String adresa;
-
     private String telefon;
-
     private String email;
-
     private String parola;
-
-
 
     public Clienti() {
     }
@@ -27,13 +25,11 @@ public class Clienti {
         this.parola = parola;
     }
 
-    // Metode get și set
-
-    public int getClientId() {
+    public int getClient_id() {
         return client_id;
     }
 
-    public void setClientId(int clientId) {
+    public void setClient_id(int client_id) {
         this.client_id = client_id;
     }
 
@@ -77,12 +73,10 @@ public class Clienti {
         this.parola = parola;
     }
 
-    // Metoda toString
-
     @Override
     public String toString() {
         return "Client{" +
-                "clientId=" + client_id +
+                "client_id=" + client_id +
                 ", nume='" + nume + '\'' +
                 ", adresa='" + adresa + '\'' +
                 ", telefon='" + telefon + '\'' +
