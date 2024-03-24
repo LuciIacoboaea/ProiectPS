@@ -1,7 +1,7 @@
-package Service;
+package com.example.siteWeb.Service;
 
-import Repo.ClientiRepository;
-import Tabele.Clienti;
+import com.example.siteWeb.Repo.ClientiRepository;
+import com.example.siteWeb.Tabele.Clienti;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -20,15 +20,16 @@ public class ClientiService {
         return clientiRepository.findAll();
     }
 
-    public Clienti getClientById(int id) {
+    public Clienti getClientById(long id) {
         return clientiRepository.findById(id).orElse(null);
     }
 
     public Clienti createClient(Clienti client) {
+
         return clientiRepository.save(client);
     }
 
-    public Clienti updateClient(int id, Clienti clientDetails) {
+    public Clienti updateClient(Long id, Clienti clientDetails) {
         Clienti client = clientiRepository.findById(id).orElse(null);
         if (client != null) {
             client.setNume(clientDetails.getNume());
@@ -41,7 +42,7 @@ public class ClientiService {
         return null;
     }
 
-    public void deleteClient(int id) {
+    public void deleteClient(Long id) {
         clientiRepository.deleteById(id);
     }
 }

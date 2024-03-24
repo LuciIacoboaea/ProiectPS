@@ -1,36 +1,33 @@
-package Tabele;
-import javax.persistence.*;
+package com.example.siteWeb.Tabele;
+public class Restaurante {
 
-@Entity
-@Table(name = "clienti")
-public class Clienti {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int client_id;
-
+    private int restaurant_id;
     private String nume;
     private String adresa;
+    private String oras;
     private String telefon;
     private String email;
-    private String parola;
+    private int rating;
 
-    public Clienti() {
+    public Restaurante() {
     }
 
-    public Clienti(String nume, String adresa, String telefon, String email, String parola) {
+    public Restaurante(int restaurant_id, String nume, String adresa, String oras, String telefon, String email, int rating) {
+        this.restaurant_id = restaurant_id;
         this.nume = nume;
         this.adresa = adresa;
+        this.oras = oras;
         this.telefon = telefon;
         this.email = email;
-        this.parola = parola;
+        this.rating = rating;
     }
 
-    public int getClient_id() {
-        return client_id;
+    public int getRestaurant_id() {
+        return restaurant_id;
     }
 
-    public void setClient_id(int client_id) {
-        this.client_id = client_id;
+    public void setRestaurant_id(int restaurant_id) {
+        this.restaurant_id = restaurant_id;
     }
 
     public String getNume() {
@@ -49,6 +46,14 @@ public class Clienti {
         this.adresa = adresa;
     }
 
+    public String getOras() {
+        return oras;
+    }
+
+    public void setOras(String oras) {
+        this.oras = oras;
+    }
+
     public String getTelefon() {
         return telefon;
     }
@@ -65,23 +70,24 @@ public class Clienti {
         this.email = email;
     }
 
-    public String getParola() {
-        return parola;
+    public int getRating() {
+        return rating;
     }
 
-    public void setParola(String parola) {
-        this.parola = parola;
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     @Override
     public String toString() {
-        return "Client{" +
-                "client_id=" + client_id +
+        return "Restaurante{" +
+                "restaurant_id=" + restaurant_id +
                 ", nume='" + nume + '\'' +
                 ", adresa='" + adresa + '\'' +
+                ", oras='" + oras + '\'' +
                 ", telefon='" + telefon + '\'' +
                 ", email='" + email + '\'' +
-                ", parola='" + parola + '\'' +
+                ", rating=" + rating +
                 '}';
     }
 }

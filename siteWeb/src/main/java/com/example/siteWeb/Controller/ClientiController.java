@@ -1,7 +1,7 @@
-package Controller;
+package com.example.siteWeb.Controller;
 
-import Service.ClientiService;
-import Tabele.Clienti;
+import com.example.siteWeb.Service.ClientiService;
+import com.example.siteWeb.Tabele.Clienti;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class ClientiController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Clienti> getClientById(@PathVariable int id) {
+    public ResponseEntity<Clienti> getClientById(@PathVariable Long id) {
         Clienti client = clientiService.getClientById(id);
         return client != null ? ResponseEntity.ok(client) : ResponseEntity.notFound().build();
     }
@@ -38,13 +38,13 @@ public class ClientiController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Clienti> updateClient(@PathVariable int id, @RequestBody Clienti clientDetails) {
+    public ResponseEntity<Clienti> updateClient(@PathVariable Long id, @RequestBody Clienti clientDetails) {
         Clienti updatedClient = clientiService.updateClient(id, clientDetails);
         return updatedClient != null ? ResponseEntity.ok(updatedClient) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteClient(@PathVariable int id) {
+    public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
         clientiService.deleteClient(id);
         return ResponseEntity.ok().build();
     }

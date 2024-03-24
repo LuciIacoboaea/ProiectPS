@@ -1,4 +1,4 @@
-package Tabele;
+package com.example.siteWeb.Tabele;
 import java.time.LocalDate;
 
 public class Recenzii {

@@ -1,33 +1,35 @@
-package Tabele;
-public class Restaurante {
+package com.example.siteWeb.Tabele;
+import jakarta.persistence.*;
 
-    private int restaurant_id;
+@Entity
+public class Clienti {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long client_id;
+
     private String nume;
     private String adresa;
-    private String oras;
     private String telefon;
     private String email;
-    private int rating;
+    private String parola;
 
-    public Restaurante() {
+    public Clienti() {
     }
 
-    public Restaurante(int restaurant_id, String nume, String adresa, String oras, String telefon, String email, int rating) {
-        this.restaurant_id = restaurant_id;
+    public Clienti(String nume, String adresa, String telefon, String email, String parola) {
         this.nume = nume;
         this.adresa = adresa;
-        this.oras = oras;
         this.telefon = telefon;
         this.email = email;
-        this.rating = rating;
+        this.parola = parola;
     }
 
-    public int getRestaurant_id() {
-        return restaurant_id;
+    public long getClient_id() {
+        return client_id;
     }
 
-    public void setRestaurant_id(int restaurant_id) {
-        this.restaurant_id = restaurant_id;
+    public void setClient_id(int client_id) {
+        this.client_id = client_id;
     }
 
     public String getNume() {
@@ -46,14 +48,6 @@ public class Restaurante {
         this.adresa = adresa;
     }
 
-    public String getOras() {
-        return oras;
-    }
-
-    public void setOras(String oras) {
-        this.oras = oras;
-    }
-
     public String getTelefon() {
         return telefon;
     }
@@ -70,24 +64,23 @@ public class Restaurante {
         this.email = email;
     }
 
-    public int getRating() {
-        return rating;
+    public String getParola() {
+        return parola;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setParola(String parola) {
+        this.parola = parola;
     }
 
     @Override
     public String toString() {
-        return "Restaurante{" +
-                "restaurant_id=" + restaurant_id +
+        return "Client{" +
+                "client_id=" + client_id +
                 ", nume='" + nume + '\'' +
                 ", adresa='" + adresa + '\'' +
-                ", oras='" + oras + '\'' +
                 ", telefon='" + telefon + '\'' +
                 ", email='" + email + '\'' +
-                ", rating=" + rating +
+                ", parola='" + parola + '\'' +
                 '}';
     }
 }

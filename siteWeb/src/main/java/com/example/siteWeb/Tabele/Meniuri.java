@@ -1,4 +1,4 @@
-package Tabele;
+package com.example.siteWeb.Tabele;
 public class Meniuri {
 
     private int meniu_id;
