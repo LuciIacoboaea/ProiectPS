@@ -1,5 +1,8 @@
 package com.example.siteWeb.Tabele;
 import jakarta.persistence.*;
+
+import java.util.List;
+
 /**
  * Aceasta este clasa care reprezintă entitatea Produse.
  * Această clasă este utilizată pentru a gestiona informațiile despre produsele disponibile în meniuri.
@@ -14,6 +17,11 @@ public class Produse {
     private String nume;
     private String descriere;
     private int pret;
+    @ManyToOne
+    @JoinColumn(name = "meniu_id")
+    private Meniuri meniu;
+    @OneToMany(mappedBy = "produs", cascade = CascadeType.ALL)
+    private List<Stocuri> stocuri;
 
     /**
      * Constructorul implicit al clasei Produse.
@@ -128,6 +136,23 @@ public class Produse {
         this.pret = pret;
     }
 
+    /**
+     * Metodă pentru obținerea meniului asociat produsului.
+     *
+     * @return Meniul asociat produsului.
+     */
+    public Meniuri getMeniu() {
+        return meniu;
+    }
+
+    /**
+     * Metodă pentru setarea meniului asociat produsului.
+     *
+     * @param meniu Meniul asociat produsului.
+     */
+    public void setMeniu(Meniuri meniu) {
+        this.meniu = meniu;
+    }
     /**
      * Metodă pentru obținerea reprezentării sub formă de șir de caractere a obiectului Produse.
      *

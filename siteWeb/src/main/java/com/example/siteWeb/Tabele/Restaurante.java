@@ -23,6 +23,9 @@ public class Restaurante {
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Meniuri> meniuri = new ArrayList<>();
 
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Stocuri> stocuri;
+
     /**
      * Constructorul implicit al clasei Restaurante.
      */
