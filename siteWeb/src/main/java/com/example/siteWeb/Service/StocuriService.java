@@ -1,5 +1,5 @@
 package com.example.siteWeb.Service;
-
+import com.example.siteWeb.Observator.StocuriObs;
 import com.example.siteWeb.Repo.StocuriRepository;
 import com.example.siteWeb.Tabele.Produse;
 import com.example.siteWeb.Tabele.Restaurante;
@@ -13,6 +13,9 @@ public class StocuriService {
 
     @Autowired
     private StocuriRepository stocuriRepository;
+
+    @Autowired
+    private StocuriObs stocuriObs;
 
     public List<Stocuri> getAllStocuri() {
         return stocuriRepository.findAll();
@@ -32,6 +35,10 @@ public class StocuriService {
             stocuri.setRestaurant(stocuriDetails.getRestaurant());
             stocuri.setProdus(stocuriDetails.getProdus());
             stocuri.setCantitate(stocuriDetails.getCantitate());
+            // Notificăm observatorul pentru actualizare
+            stocuriObs.onStocUpdate(stocuri);
+            // Notificăm observatorii asociați stocului
+            stocuriObs.notifyObservers(stocuri);
             return stocuriRepository.save(stocuri);
         } else {
             return null;

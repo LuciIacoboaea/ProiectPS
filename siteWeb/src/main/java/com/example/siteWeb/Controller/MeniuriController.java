@@ -1,5 +1,6 @@
 package com.example.siteWeb.Controller;
 
+import com.example.siteWeb.Service.ProduseService;
 import com.example.siteWeb.Tabele.Meniuri;
 import com.example.siteWeb.Service.MeniuriService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ import java.util.List;
 public class MeniuriController {
 
     private final MeniuriService meniuriService;
+
+    @Autowired
+    private ProduseService produseService;
 
     @Autowired
     public MeniuriController(MeniuriService meniuriService) {
@@ -56,9 +60,4 @@ public class MeniuriController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMeniu(@PathVariable("id") int meniuId) {
-        meniuriService.deleteMeniu(meniuId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 }

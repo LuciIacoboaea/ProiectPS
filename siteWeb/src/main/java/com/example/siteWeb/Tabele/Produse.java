@@ -1,11 +1,11 @@
 package com.example.siteWeb.Tabele;
+
 import jakarta.persistence.*;
 
 import java.util.List;
 
 /**
- * Aceasta este clasa care reprezintă entitatea Produse.
- * Această clasă este utilizată pentru a gestiona informațiile despre produsele disponibile în meniuri.
+ * Această clasă reprezintă o entitate pentru gestionarea informațiilor despre produsele disponibile în meniuri.
  */
 @Entity
 public class Produse {
@@ -13,13 +13,22 @@ public class Produse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int produs_id;
-    private int meniu_id;
+
+    /** Numele produsului. */
     private String nume;
+
+    /** Descrierea produsului. */
     private String descriere;
+
+    /** Prețul produsului. */
     private int pret;
+
+    /** Meniul asociat produsului. */
     @ManyToOne
-    @JoinColumn(name = "meniu_id")
+    @JoinColumn(name = "meniu_id", referencedColumnName = "meniu_id", nullable = false)
     private Meniuri meniu;
+
+    /** Lista de stocuri pentru acest produs. */
     @OneToMany(mappedBy = "produs", cascade = CascadeType.ALL)
     private List<Stocuri> stocuri;
 
@@ -30,17 +39,15 @@ public class Produse {
     }
 
     /**
-     * Constructorul cu parametri al clasei Produse.
+     * Constructor cu parametri pentru clasa Produse.
      *
-     * @param produs_id  ID-ul produsului.
-     * @param meniu_id   ID-ul meniului la care este asociat produsul.
-     * @param nume       Numele produsului.
-     * @param descriere  Descrierea produsului.
-     * @param pret       Prețul produsului.
+     * @param produs_id ID-ul produsului.
+     * @param nume      Numele produsului.
+     * @param descriere Descrierea produsului.
+     * @param pret      Prețul produsului.
      */
-    public Produse(int produs_id, int meniu_id, String nume, String descriere, int pret) {
+    public Produse(int produs_id, String nume, String descriere, int pret) {
         this.produs_id = produs_id;
-        this.meniu_id = meniu_id;
         this.nume = nume;
         this.descriere = descriere;
         this.pret = pret;
@@ -62,24 +69,6 @@ public class Produse {
      */
     public void setProdus_id(int produs_id) {
         this.produs_id = produs_id;
-    }
-
-    /**
-     * Metodă pentru obținerea ID-ului meniului asociat produsului.
-     *
-     * @return ID-ul meniului.
-     */
-    public int getMeniu_id() {
-        return meniu_id;
-    }
-
-    /**
-     * Metodă pentru setarea ID-ului meniului asociat produsului.
-     *
-     * @param meniu_id ID-ul meniului.
-     */
-    public void setMeniu_id(int meniu_id) {
-        this.meniu_id = meniu_id;
     }
 
     /**
@@ -153,6 +142,7 @@ public class Produse {
     public void setMeniu(Meniuri meniu) {
         this.meniu = meniu;
     }
+
     /**
      * Metodă pentru obținerea reprezentării sub formă de șir de caractere a obiectului Produse.
      *
@@ -162,7 +152,6 @@ public class Produse {
     public String toString() {
         return "Produse{" +
                 "produs_id=" + produs_id +
-                ", meniu_id=" + meniu_id +
                 ", nume='" + nume + '\'' +
                 ", descriere='" + descriere + '\'' +
                 ", pret=" + pret +

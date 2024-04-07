@@ -16,6 +16,9 @@ public class MeniuriService {
     private final RestauranteRepository restauranteRepository; // Adăugați repository-ul pentru restaurante
 
     @Autowired
+    private ProduseService produseService;
+
+    @Autowired
     public MeniuriService(MeniuriRepository meniuriRepository, RestauranteRepository restauranteRepository) {
         this.meniuriRepository = meniuriRepository;
         this.restauranteRepository = restauranteRepository; // Injectați repository-ul pentru restaurante
@@ -55,4 +58,5 @@ public class MeniuriService {
     public void deleteMeniu(int meniuId) {
         meniuriRepository.deleteById(meniuId);
     }
+
 }

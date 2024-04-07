@@ -54,9 +54,4 @@ public class ProduseController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/meniu/{meniuId}")
-    public ResponseEntity<Void> deleteProduseByMeniuId(@PathVariable("meniuId") int meniuId) {
-        produseService.deleteByMeniuId(meniuId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 }

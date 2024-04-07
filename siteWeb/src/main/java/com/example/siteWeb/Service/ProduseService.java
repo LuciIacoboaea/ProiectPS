@@ -1,7 +1,9 @@
 package com.example.siteWeb.Service;
 
 import com.example.siteWeb.Repo.ProduseRepository;
+import com.example.siteWeb.Tabele.Meniuri;
 import com.example.siteWeb.Tabele.Produse;
+import com.example.siteWeb.Repo.MeniuriRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +43,4 @@ public class ProduseService {
         produseRepository.deleteById(id);
     }
 
-    public void deleteByMeniuId(int meniuId) {
-        produseRepository.deleteByMeniu_id(meniuId);
-    }
 }

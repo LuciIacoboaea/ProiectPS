@@ -1,13 +1,17 @@
 package com.example.siteWeb.Tabele;
 
+import com.example.siteWeb.Observator.Obs;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clasa care reprezintă entitatea Stocuri.
  * Această clasă este utilizată pentru gestionarea informațiilor despre stocurile de produse ale restaurantelor.
  */
 @Entity
-public class Stocuri {
+public class Stocuri  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
