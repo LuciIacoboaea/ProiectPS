@@ -2,6 +2,9 @@ package com.example.siteWeb.Tabele;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Aceasta este clasa care reprezintă entitatea Meniuri.
  * Această clasă este utilizată pentru a gestiona informațiile despre meniurile disponibile în restaurante.
@@ -13,7 +16,7 @@ public class Meniuri {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int meniu_id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "restaurant_id")
     private Restaurante restaurant;
 
@@ -22,6 +25,12 @@ public class Meniuri {
     private String descriere;
 
     private String categorie;
+
+    @OneToMany(mappedBy = "meniu", cascade = CascadeType.ALL)
+    private List<Comenzi> comenzi = new ArrayList<>();
+
+    @OneToMany(mappedBy = "meniu", cascade = CascadeType.ALL)
+    private List<Produse> produse= new ArrayList<>();
 
     /**
      * Constructorul implicit al clasei Meniuri.

@@ -24,7 +24,7 @@ public class Produse {
     private int pret;
 
     /** Meniul asociat produsului. */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "meniu_id", referencedColumnName = "meniu_id", nullable = false)
     private Meniuri meniu;
 

@@ -8,7 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+/**
+ * Clasa controller responsabilă pentru gestionarea cererilor HTTP legate de Produse.
+ * Oferă puncte terminale pentru obținerea, crearea, actualizarea și ștergerea produselor.
+ */
 @RestController
 @RequestMapping("/produse")
 public class ProduseController {
@@ -22,6 +25,10 @@ public class ProduseController {
         return new ResponseEntity<>(produseList, HttpStatus.OK);
     }
 
+    /**
+     * Metodă pentru obținerea tuturor produselor.
+     * @return Lista de produse.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Produse> getProdusById(@PathVariable("id") int id) {
         Produse produs = produseService.getProdusById(id);
@@ -31,6 +38,7 @@ public class ProduseController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
 
     @PostMapping
     public ResponseEntity<Produse> createProdus(@RequestBody Produse produs) {

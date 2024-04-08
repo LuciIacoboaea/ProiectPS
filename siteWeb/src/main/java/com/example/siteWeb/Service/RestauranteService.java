@@ -1,7 +1,11 @@
 package com.example.siteWeb.Service;
 
+import com.example.siteWeb.Repo.ComenziRepository;
+import com.example.siteWeb.Repo.MeniuriRepository;
+import com.example.siteWeb.Tabele.Meniuri;
 import com.example.siteWeb.Tabele.Restaurante;
 import com.example.siteWeb.Repo.RestauranteRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +15,10 @@ import java.util.Optional;
 @Service
 public class RestauranteService {
 
+    @Autowired
+    private ComenziRepository comenziRepository;
+    @Autowired
+    private MeniuriRepository meniuriRepository;
     private final RestauranteRepository restauranteRepository;
 
     @Autowired
@@ -44,11 +52,10 @@ public class RestauranteService {
         return null;
     }
 
-    public boolean deleteRestaurante(int id) {
-        if (restauranteRepository.existsById(id)) {
-            restauranteRepository.deleteById(id);
-            return true;
+    public void deleteRestaurantAndAssociatedData(int restaurantId) {
+        Restaurante restaurant = restauranteRepository.findById(restaurantId).orElse(null);
+        if (restaurant != null) {
+            restauranteRepository.delete(restaurant);
         }
-        return false;
     }
 }

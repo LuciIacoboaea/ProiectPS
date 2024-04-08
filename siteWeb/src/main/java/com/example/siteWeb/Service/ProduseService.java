@@ -4,6 +4,7 @@ import com.example.siteWeb.Repo.ProduseRepository;
 import com.example.siteWeb.Tabele.Meniuri;
 import com.example.siteWeb.Tabele.Produse;
 import com.example.siteWeb.Repo.MeniuriRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

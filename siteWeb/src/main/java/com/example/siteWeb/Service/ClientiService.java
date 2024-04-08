@@ -40,7 +40,7 @@ public class ClientiService {
      * @param id Identificatorul clientului.
      * @return Clientul cu identificatorul specificat sau null dacă nu este găsit.
      */
-    public Clienti getClientById(long id) {
+    public Clienti getClientById(int id) {
         return clientiRepository.findById(id).orElse(null);
     }
 
@@ -61,7 +61,7 @@ public class ClientiService {
      * @param clientDetails Obiectul Clienti ce conține noile informații ale clientului.
      * @return Clientul actualizat sau null dacă clientul cu identificatorul specificat nu există.
      */
-    public Clienti updateClient(Long id, Clienti clientDetails) {
+    public Clienti updateClient(int id, Clienti clientDetails) {
         Clienti client = clientiRepository.findById(id).orElse(null);
         if (client != null) {
             client.setNume(clientDetails.getNume());
@@ -79,7 +79,7 @@ public class ClientiService {
      *
      * @param id Identificatorul clientului ce urmează să fie șters.
      */
-    public void deleteClient(Long id) {
+    public void deleteClient(int id) {
         clientiRepository.deleteById(id);
     }
 
@@ -90,7 +90,7 @@ public class ClientiService {
      * @param clientDetails Obiectul Clienti ce conține parțial noile informații ale clientului.
      * @return Clientul actualizat sau null dacă clientul cu identificatorul specificat nu există.
      */
-    public Clienti partiallyUpdateClient(Long id, Clienti clientDetails) {
+    public Clienti partiallyUpdateClient(int id, Clienti clientDetails) {
         Clienti client = clientiRepository.findById(id).orElse(null);
         if (client != null) {
             if (clientDetails.getNume() != null) {

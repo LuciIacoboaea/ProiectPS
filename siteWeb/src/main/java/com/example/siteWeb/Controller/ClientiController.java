@@ -34,7 +34,7 @@ public class ClientiController {
      * @return Răspunsul HTTP care conține clientul sau o eroare 404 dacă clientul nu a fost găsit
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Clienti> getClientById(@PathVariable Long id) {
+    public ResponseEntity<Clienti> getClientById(@PathVariable int id) {
         Clienti client = clientiService.getClientById(id);
         return client != null ? ResponseEntity.ok(client) : ResponseEntity.notFound().build();
     }
@@ -70,7 +70,7 @@ public class ClientiController {
      * @return Răspunsul HTTP care conține clientul actualizat sau o eroare 404 dacă clientul nu a fost găsit
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Clienti> updateClient(@PathVariable Long id, @RequestBody Clienti clientDetails) {
+    public ResponseEntity<Clienti> updateClient(@PathVariable int id, @RequestBody Clienti clientDetails) {
         Clienti updatedClient = clientiService.updateClient(id, clientDetails);
         return updatedClient != null ? ResponseEntity.ok(updatedClient) : ResponseEntity.notFound().build();
     }
@@ -82,7 +82,7 @@ public class ClientiController {
      * @return Răspunsul HTTP fără conținut, indicând că ștergerea a fost realizată cu succes
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteClient(@PathVariable int id) {
         clientiService.deleteClient(id);
         return ResponseEntity.ok().build();
     }
@@ -95,7 +95,7 @@ public class ClientiController {
      * @return Răspunsul HTTP care conține clientul actualizat sau o eroare 404 dacă clientul nu a fost găsit
      */
     @PatchMapping("/{id}")
-    public ResponseEntity<Clienti> partiallyUpdateClient(@PathVariable Long id, @RequestBody Clienti clientDetails) {
+    public ResponseEntity<Clienti> partiallyUpdateClient(@PathVariable int id, @RequestBody Clienti clientDetails) {
         Clienti updatedClient = clientiService.partiallyUpdateClient(id, clientDetails);
         return updatedClient != null ? ResponseEntity.ok(updatedClient) : ResponseEntity.notFound().build();
     }
@@ -106,7 +106,7 @@ public class ClientiController {
      * @return Răspunsul HTTP care conține antetul clientului sau o eroare 404 dacă clientul nu a fost găsit
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.HEAD)
-    public ResponseEntity<Void> getClientHeaderById(@PathVariable Long id) {
+    public ResponseEntity<Void> getClientHeaderById(@PathVariable int id) {
         Clienti client = clientiService.getClientById(id);
         return client != null ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }

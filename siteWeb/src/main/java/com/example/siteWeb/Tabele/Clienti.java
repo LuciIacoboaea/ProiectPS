@@ -2,6 +2,9 @@ package com.example.siteWeb.Tabele;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Clasa Clienti reprezintă o entitate JPA care este mapată la tabela "clienti" din baza de date.
  */
@@ -9,13 +12,16 @@ import jakarta.persistence.*;
 public class Clienti {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long client_id;
+    private int client_id;
 
     private String nume;
     private String adresa;
     private String telefon;
     private String email;
     private String parola;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comenzi> comenzi= new ArrayList<>();
 
     /**
      * Constructorul implicit pentru clasa Clienti.
@@ -45,7 +51,7 @@ public class Clienti {
      *
      * @return Id-ul clientului.
      */
-    public long getClient_id() {
+    public int getClient_id() {
         return client_id;
     }
 
@@ -153,6 +159,13 @@ public class Clienti {
      *
      * @return String ce reprezintă obiectul Clienti.
      */
+    public List<Comenzi> getComenzi() {
+        return comenzi;
+    }
+
+    public void setComenzi(List<Comenzi> comenzi) {
+        this.comenzi = comenzi;
+    }
     @Override
     public String toString() {
         return "Client{" +

@@ -18,11 +18,11 @@ public class Comenzi {
     @JoinColumn(name = "client_id")
     private Clienti client;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "restaurant_id")
     private Restaurante restaurant;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "meniu_id")
     private Meniuri meniu;
 
