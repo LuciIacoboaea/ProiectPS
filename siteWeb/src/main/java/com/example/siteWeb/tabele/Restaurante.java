@@ -32,6 +32,9 @@ public class Restaurante {
     @OneToMany(mappedBy = "restaurant", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<Comenzi> comenzi = new ArrayList<>();
 
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Promotii> promotii;
+
     /**
      * Constructorul implicit al clasei Restaurante.
      */
@@ -214,5 +217,13 @@ public class Restaurante {
                 ", email='" + email + '\'' +
                 ", rating=" + rating +
                 '}';
+    }
+
+    public List<Comenzi> getComenzi() {
+        return comenzi;
+    }
+
+    public List<Promotii> getPromotii() {
+        return promotii;
     }
 }

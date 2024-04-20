@@ -157,4 +157,8 @@ public class Produse {
                 ", pret=" + pret +
                 '}';
     }
+
+    public List<Stocuri> getStocuri() {
+        return stocuri;
+    }
 }

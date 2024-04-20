@@ -1,10 +1,12 @@
 package com.example.siteWeb.service;
 
 import com.example.siteWeb.contracte.ProduseContract;
+import com.example.siteWeb.contracte.StocuriContract;
 import com.example.siteWeb.interfataService.ProduseServiceInterfata;
 import com.example.siteWeb.repo.MeniuriRepository;
 import com.example.siteWeb.tabele.Meniuri;
 import com.example.siteWeb.tabele.Produse;
+import com.example.siteWeb.tabele.Stocuri;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,13 @@ public class ProduseService implements ProduseServiceInterfata {
     private final ProduseContract produseContract;
     private final MeniuriRepository meniuriRepository;
 
+    private final StocuriContract stocuriContract;
+
     @Autowired
-    public ProduseService(ProduseContract produseContract, MeniuriRepository meniuriRepository) {
+    public ProduseService(ProduseContract produseContract, MeniuriRepository meniuriRepository, StocuriContract stocuriContract) {
         this.produseContract = produseContract;
         this.meniuriRepository = meniuriRepository;
+        this.stocuriContract = stocuriContract;
     }
 
     public List<Produse> getAllProduse() {
@@ -55,7 +60,29 @@ public class ProduseService implements ProduseServiceInterfata {
     }
 
     public void deleteProdus(int id) {
-        produseContract.deleteById(id);
-    }
+        // Căutăm produsul în baza de date
+        Produse produs = produseContract.findById(id).orElse(null);
+        if (produs != null) {
+            // Căutăm meniul asociat produsului
+            Meniuri meniu = produs.getMeniu();
+            if (meniu != null) {
+                // Ștergem meniul asociat produsului
+                meniuriRepository.delete(meniu);
+            }
 
+            // Căutăm stocurile asociate produsului
+            List<Stocuri> stocuri = produs.getStocuri();
+            if (stocuri != null) {
+                // Ștergem fiecare stoc asociat produsului
+                for (Stocuri stoc : stocuri) {
+                    // Ștergem stocul din baza de date
+                    stocuriContract.deleteById(stoc.getStoc_id());
+                }
+            }
+
+            // Ștergem produsul din baza de date
+            produseContract.deleteById(id);
+        }
+
+    }
 }
