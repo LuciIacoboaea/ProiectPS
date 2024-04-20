@@ -1,6 +1,5 @@
 package com.example.siteWeb.interfataService;
 
-import com.example.siteWeb.dto.MeniuriDto;
 import com.example.siteWeb.tabele.Meniuri;
 
 import java.util.List;

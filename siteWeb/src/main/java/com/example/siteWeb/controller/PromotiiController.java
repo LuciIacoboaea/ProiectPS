@@ -40,9 +40,9 @@ public class PromotiiController {
      * @param promotii Promoția de creat sau actualizat.
      * @return Promoția creată sau actualizată.
      */
-    @PostMapping
-    public Promotii createPromotii(@RequestBody Promotii promotii) {
-        return promotiiService.createOrUpdatePromotii(promotii);
+    @PostMapping("/{id}")
+    public Promotii createPromotii(@RequestBody Promotii promotii,@PathVariable("id") int restaurantId) {
+        return promotiiService.createPromotii(promotii,restaurantId);
     }
     /**
      * Metodă pentru actualizarea unei promoții existente.
@@ -53,7 +53,7 @@ public class PromotiiController {
     @PutMapping("/{id}")
     public Promotii updatePromotii(@PathVariable int id, @RequestBody Promotii promotii) {
         promotii.setPromotie_id(id);
-        return promotiiService.createOrUpdatePromotii(promotii);
+        return promotiiService.updatePromotii(id,promotii);
     }
     /**
      * Metodă pentru ștergerea unei promoții.

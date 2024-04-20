@@ -12,7 +12,7 @@ public class Promotii {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int promotie_id;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "restaurant_id", referencedColumnName = "restaurant_id", nullable = false)
     private Restaurante restaurant;
     private String cod_promotional;

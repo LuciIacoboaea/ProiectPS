@@ -15,10 +15,6 @@ import java.util.Optional;
 @Service
 public class RestauranteService implements RestauranteServiceInterfata {
 
-    @Autowired
-    private ComenziRepository comenziRepository;
-    @Autowired
-    private MeniuriRepository meniuriRepository;
     private final RestauranteContract restauranteContract;
 
     @Autowired

@@ -23,7 +23,7 @@ public class Restaurante {
     private int rating;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "restaurant", orphanRemoval = true)
+    @OneToMany(mappedBy = "restaurant", orphanRemoval = true,cascade = CascadeType.REMOVE)
     private List<Meniuri> meniuri = new ArrayList<>();
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)

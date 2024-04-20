@@ -1,7 +1,6 @@
 package com.example.siteWeb.service;
 
 import com.example.siteWeb.contracte.MeniuriContract;
-import com.example.siteWeb.dto.MeniuriDto;
 import com.example.siteWeb.interfataService.MeniuriServiceInterfata;
 import com.example.siteWeb.tabele.Meniuri;
 import com.example.siteWeb.repo.MeniuriRepository;

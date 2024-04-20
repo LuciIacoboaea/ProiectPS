@@ -32,7 +32,7 @@ public class Meniuri {
     @OneToMany(mappedBy = "meniu", cascade = CascadeType.ALL)
     private List<Comenzi> comenzi = new ArrayList<>();
 
-    @OneToMany(mappedBy = "meniu", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "meniu", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Produse> produse;
 
     /**
