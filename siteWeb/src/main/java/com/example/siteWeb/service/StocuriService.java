@@ -1,4 +1,6 @@
 package com.example.siteWeb.service;
+import com.example.siteWeb.contracte.StocuriContract;
+import com.example.siteWeb.interfataService.StocuriServiceInterfata;
 import com.example.siteWeb.observator.StocuriObs;
 import com.example.siteWeb.repo.StocuriRepository;
 import com.example.siteWeb.tabele.Produse;
@@ -9,51 +11,46 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StocuriService {
+public class StocuriService implements StocuriServiceInterfata {
 
     @Autowired
-    private StocuriRepository stocuriRepository;
+    private final StocuriContract stocuriContract;
+    @Autowired
+    private final StocuriObs stocuriObs;
 
     @Autowired
-    private StocuriObs stocuriObs;
+    public StocuriService(StocuriContract stocuriContract, StocuriObs stocuriObs) {
+        this.stocuriContract = stocuriContract;
+        this.stocuriObs = stocuriObs;
+    }
 
     public List<Stocuri> getAllStocuri() {
-        return stocuriRepository.findAll();
+        return stocuriContract.findAll();
     }
 
     public Stocuri getStocById(int id) {
-        return stocuriRepository.findById(id).orElse(null);
+        return stocuriContract.findById(id).orElse(null);
     }
 
     public Stocuri createStoc(Stocuri stocuri) {
-        return stocuriRepository.save(stocuri);
+        return stocuriContract.save(stocuri);
     }
 
     public Stocuri updateStoc(int id, Stocuri stocuriDetails) {
-        Stocuri stocuri = stocuriRepository.findById(id).orElse(null);
+        Stocuri stocuri = stocuriContract.findById(id).orElse(null);
         if (stocuri != null) {
             stocuri.setRestaurant(stocuriDetails.getRestaurant());
             stocuri.setProdus(stocuriDetails.getProdus());
             stocuri.setCantitate(stocuriDetails.getCantitate());
-            // Notificăm observatorul pentru actualizare
             stocuriObs.onStocUpdate(stocuri);
-            // Notificăm observatorii asociați stocului
             stocuriObs.notifyObservers(stocuri);
-            return stocuriRepository.save(stocuri);
+            return stocuriContract.save(stocuri);
         } else {
             return null;
         }
     }
 
     public void deleteStoc(int id) {
-        stocuriRepository.deleteById(id);
-    }
-
-    public void deleteByRestaurant(Restaurante restaurant) {
-        stocuriRepository.deleteByRestaurant(restaurant);
-    }
-
-    public void deleteByProdus(Produse produs) {
-        stocuriRepository.deleteByProdus(produs);
+        stocuriContract.deleteById(id);
     }
 }

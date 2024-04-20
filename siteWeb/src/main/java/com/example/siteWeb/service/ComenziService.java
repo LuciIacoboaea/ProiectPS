@@ -1,5 +1,7 @@
 package com.example.siteWeb.service;
 
+import com.example.siteWeb.contracte.ComenziContract;
+import com.example.siteWeb.interfataService.ComenziServiceInterfata;
 import com.example.siteWeb.repo.ComenziRepository;
 import com.example.siteWeb.tabele.Comenzi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +13,13 @@ import java.util.List;
  * Serviciu pentru gestionarea operațiilor legate de comenzile efectuate.
  */
 @Service
-public class ComenziService {
+public class ComenziService implements ComenziServiceInterfata {
 
-    private final ComenziRepository comenziRepository;
+    private final ComenziContract comenziContract;
 
     @Autowired
-    public ComenziService(ComenziRepository comenziRepository) {
-        this.comenziRepository = comenziRepository;
+    public ComenziService(ComenziContract comenziContract) {
+        this.comenziContract = comenziContract;
     }
 
     /**
@@ -26,7 +28,7 @@ public class ComenziService {
      * @return Lista cu toate comenzile.
      */
     public List<Comenzi> getAllComenzi() {
-        return comenziRepository.findAll();
+        return comenziContract.findAll();
     }
 
     /**
@@ -36,7 +38,7 @@ public class ComenziService {
      * @return Comanda cu identificatorul specificat sau null dacă nu este găsită.
      */
     public Comenzi getComandaById(int id) {
-        return comenziRepository.findById(id).orElse(null);
+        return comenziContract.findById(id).orElse(null);
     }
 
     /**
@@ -46,7 +48,7 @@ public class ComenziService {
      * @return Comanda creată.
      */
     public Comenzi createComanda(Comenzi comanda) {
-        return comenziRepository.save(comanda);
+        return comenziContract.save(comanda);
     }
 
     /**
@@ -57,7 +59,7 @@ public class ComenziService {
      * @return Comanda actualizată sau null dacă comanda cu identificatorul specificat nu există.
      */
     public Comenzi updateComanda(int id, Comenzi comandaDetails) {
-        Comenzi comanda = comenziRepository.findById(id).orElse(null);
+        Comenzi comanda = comenziContract.findById(id).orElse(null);
         if (comanda != null) {
             comanda.setClient(comandaDetails.getClient());
             comanda.setRestaurant(comandaDetails.getRestaurant());
@@ -65,7 +67,7 @@ public class ComenziService {
             comanda.setAdresa_livrare(comandaDetails.getAdresa_livrare());
             comanda.setData_ora(comandaDetails.getData_ora());
             comanda.setSuma_totala(comandaDetails.getSuma_totala());
-            return comenziRepository.save(comanda);
+            return comenziContract.save(comanda);
         }
         return null;
     }
@@ -76,6 +78,6 @@ public class ComenziService {
      * @param id Identificatorul comenzii ce urmează să fie ștearsă.
      */
     public void deleteComanda(int id) {
-        comenziRepository.deleteById(id);
+        comenziContract.deleteById(id);
     }
 }

@@ -40,9 +40,9 @@ public class ProduseController {
     }
 
 
-    @PostMapping
-    public ResponseEntity<Produse> createProdus(@RequestBody Produse produs) {
-        Produse createdProdus = produseService.createProdus(produs);
+    @PostMapping("/{id}")
+    public ResponseEntity<Produse> createProdus(@RequestBody Produse produs, @PathVariable("id") int meniuId) {
+        Produse createdProdus = produseService.createProdus(produs, meniuId);
         return new ResponseEntity<>(createdProdus, HttpStatus.CREATED);
     }
 
