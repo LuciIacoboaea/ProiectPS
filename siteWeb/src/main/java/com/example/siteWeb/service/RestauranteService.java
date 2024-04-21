@@ -66,27 +66,22 @@ public class RestauranteService implements RestauranteServiceInterfata {
         Restaurante existingRestaurant = restauranteContract.findById(restaurantId).orElse(null);
 
         if (existingRestaurant != null) {
-            // Verificăm fiecare meniu asociat și ne asigurăm că restaurant_id nu este null
-            List<Meniuri> meniuri = existingRestaurant.getMeniuri();
-            for (Meniuri meniu : meniuri) {
-                if (meniu.getRestaurant() != null && meniu.getRestaurant().getRestaurant_id() == restaurantId) {
-                    // Ștergem meniul din baza de date
-                    meniuriContract.deleteById(meniu.getMeniu_id());
-                }
-            }
-
+            // Ștergem toate comenzile asociate restaurantului
             List<Comenzi> comenzi = existingRestaurant.getComenzi();
             for (Comenzi comanda : comenzi) {
-                comanda.setRestaurant(null);
-                comenziContract.save(comanda);
+                comenziContract.deleteById(comanda.getComanda_id());
+            }
+            // Ștergem toate meniurile asociate restaurantului
+            List<Meniuri> meniuri = existingRestaurant.getMeniuri();
+            for (Meniuri meniu : meniuri) {
+                meniuriContract.deleteById(meniu.getMeniu_id());
             }
 
+
+            // Ștergem toate promoțiile asociate restaurantului
             List<Promotii> promotii = existingRestaurant.getPromotii();
-            if (promotii != null && !promotii.isEmpty()) {
-                for (Promotii promotie : promotii) {
-                    promotie.setRestaurant(null);
-                    promotiiContract.save(promotie);
-                }
+            for (Promotii promotie : promotii) {
+                promotiiContract.deleteById(promotie.getPromotie_id());
             }
 
             // Ștergem restaurantul

@@ -1,13 +1,16 @@
 package com.example.siteWeb.service;
 
 import com.example.siteWeb.contracte.ComenziContract;
+import com.example.siteWeb.contracte.MeniuriContract;
 import com.example.siteWeb.interfataService.ComenziServiceInterfata;
 import com.example.siteWeb.repo.ComenziRepository;
 import com.example.siteWeb.tabele.Comenzi;
+import com.example.siteWeb.tabele.Meniuri;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Serviciu pentru gestionarea operațiilor legate de comenzile efectuate.
@@ -16,10 +19,12 @@ import java.util.List;
 public class ComenziService implements ComenziServiceInterfata {
 
     private final ComenziContract comenziContract;
+    private final MeniuriContract meniuriContract; // Adaugăm contractul pentru repository-ul de meniuri
 
     @Autowired
-    public ComenziService(ComenziContract comenziContract) {
+    public ComenziService(ComenziContract comenziContract, MeniuriContract meniuriContract) {
         this.comenziContract = comenziContract;
+        this.meniuriContract = meniuriContract; // Injectăm repository-ul de meniuri
     }
 
     /**

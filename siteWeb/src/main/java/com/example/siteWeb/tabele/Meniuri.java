@@ -19,7 +19,7 @@ public class Meniuri {
     private int meniu_id;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurante restaurant;
 
@@ -29,7 +29,7 @@ public class Meniuri {
 
     private String categorie;
 
-    @OneToMany(mappedBy = "meniu", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "meniu", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comenzi> comenzi = new ArrayList<>();
 
     @OneToMany(mappedBy = "meniu", cascade = CascadeType.REMOVE, orphanRemoval = true)
@@ -58,6 +58,9 @@ public class Meniuri {
         this.restaurant = restaurant;
     }
 
+    public List<Comenzi> getComenzi() {
+        return comenzi;
+    }
 
     /**
      * Metodă pentru obținerea ID-ului meniului.
