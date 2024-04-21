@@ -35,6 +35,10 @@ public class Restaurante {
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Promotii> promotii;
 
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Recenzii> recenzii;
+
+
     /**
      * Constructorul implicit al clasei Restaurante.
      */
@@ -226,4 +230,9 @@ public class Restaurante {
     public List<Promotii> getPromotii() {
         return promotii;
     }
+
+    public List<Recenzii> getRecenzii() {
+        return recenzii;
+    }
+
 }

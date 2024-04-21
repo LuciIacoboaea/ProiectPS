@@ -14,11 +14,12 @@ public class Recenzii {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int recenzie_id;
     private int client_id;
-    private int restaurant_id;
     private int rating;
     private String comentariu;
     private LocalDate data;
-
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    private Restaurante restaurant;
     /**
      * Constructorul implicit al clasei Recenzii.
      */
@@ -34,12 +35,12 @@ public class Recenzii {
      * @param comentariu    Comentariul asociat recenziei.
      * @param data          Data la care a fost realizată recenzia.
      */
-    public Recenzii(int client_id, int restaurant_id, int rating, String comentariu, LocalDate data) {
+    public Recenzii(int client_id, int restaurant_id, int rating, String comentariu, LocalDate data,Restaurante restaurant) {
         this.client_id = client_id;
-        this.restaurant_id = restaurant_id;
         this.rating = rating;
         this.comentariu = comentariu;
         this.data = data;
+        this.restaurant = restaurant;
     }
 
     /**
@@ -78,23 +79,6 @@ public class Recenzii {
         this.client_id = client_id;
     }
 
-    /**
-     * Metodă pentru obținerea ID-ului restaurantului care este recenzat.
-     *
-     * @return ID-ul restaurantului.
-     */
-    public int getRestaurant_id() {
-        return restaurant_id;
-    }
-
-    /**
-     * Metodă pentru setarea ID-ului restaurantului care este recenzat.
-     *
-     * @param restaurant_id ID-ul restaurantului.
-     */
-    public void setRestaurant_id(int restaurant_id) {
-        this.restaurant_id = restaurant_id;
-    }
 
     /**
      * Metodă pentru obținerea rating-ului acordat de client.
@@ -160,10 +144,16 @@ public class Recenzii {
         return "Recenzii{" +
                 "recenzie_id=" + recenzie_id +
                 ", client_id=" + client_id +
-                ", restaurant_id=" + restaurant_id +
                 ", rating=" + rating +
                 ", comentariu='" + comentariu + '\'' +
                 ", data=" + data +
                 '}';
+    }
+    public Restaurante getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurante restaurant) {
+        this.restaurant = restaurant;
     }
 }

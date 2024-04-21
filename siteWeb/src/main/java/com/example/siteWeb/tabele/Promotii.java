@@ -38,7 +38,6 @@ public class Promotii {
         this.descriere = descriere;
         this.reducere = reducere;
     }
-    // Getter și setter pentru obiectul Restaurante
     public Restaurante getRestaurant() {
         return restaurant;
     }

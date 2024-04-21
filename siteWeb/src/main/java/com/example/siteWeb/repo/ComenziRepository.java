@@ -14,24 +14,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ComenziRepository extends JpaRepository<Comenzi, Integer> {
 
-    /**
-     * Metodă pentru ștergerea comenzilor asociate unui client.
-     * @param client Clientul asociat comenzilor de șters.
-     */
-    @Transactional
-    void deleteByClient(Clienti client);
-
-    /**
-     * Metodă pentru ștergerea comenzilor asociate unui restaurant.
-     * @param restaurant Restaurantul asociat comenzilor de șters.
-     */
-    @Transactional
-    void deleteByRestaurant(Restaurante restaurant);
-
-    /**
-     * Metodă pentru ștergerea comenzilor asociate unui meniu.
-     * @param meniu Meniul asociat comenzilor de șters.
-     */
-    @Transactional
-    void deleteByMeniu(Meniuri meniu);
 }

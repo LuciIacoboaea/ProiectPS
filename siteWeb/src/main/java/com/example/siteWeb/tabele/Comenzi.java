@@ -57,8 +57,6 @@ public class Comenzi {
         this.suma_totala = suma_totala;
     }
 
-    // Metode pentru accesarea și modificarea câmpurilor
-
     /**
      * Returnează ID-ul comenzii.
      *

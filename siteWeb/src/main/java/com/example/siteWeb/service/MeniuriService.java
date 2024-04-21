@@ -29,7 +29,7 @@ public class MeniuriService implements MeniuriServiceInterfata {
     @Autowired
     public MeniuriService(MeniuriContract meniuriContract, RestauranteRepository restauranteRepository) {
         this.meniuriContract = meniuriContract;
-        this.restauranteRepository = restauranteRepository; // Injectați repository-ul pentru restaurante
+        this.restauranteRepository = restauranteRepository;
     }
     /**
      * Metodă pentru obținerea tuturor meniurilor din baza de date.
@@ -48,14 +48,11 @@ public class MeniuriService implements MeniuriServiceInterfata {
     }
 
     public Meniuri createMeniu(Meniuri meniu, int restaurantId) {
-        // Căutăm restaurantul în baza de date folosind restaurantId
         Restaurante restaurant = restauranteRepository.findById(restaurantId)
                 .orElseThrow(() -> new RuntimeException("Restaurantul nu a fost găsit în baza de date."));
 
-        // Setăm restaurantul asociat meniului
         meniu.setRestaurant(restaurant);
 
-        // Salvăm meniul în baza de date
         return meniuriContract.save(meniu);
     }
     /**

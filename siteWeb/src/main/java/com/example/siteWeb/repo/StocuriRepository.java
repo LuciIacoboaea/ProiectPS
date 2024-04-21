@@ -12,17 +12,4 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface StocuriRepository extends JpaRepository<Stocuri, Integer> {
 
-    /**
-     * Metodă pentru ștergerea stocurilor asociate unui restaurant.
-     * @param restaurant Restaurantul asociat stocurilor de șters.
-     */
-    @Transactional
-    void deleteByRestaurant(Restaurante restaurant);
-
-    /**
-     * Metodă pentru ștergerea stocurilor asociate unui produs.
-     * @param produs Produsul asociat stocurilor de șters.
-     */
-    @Transactional
-    void deleteByProdus(Produse produs);
 }

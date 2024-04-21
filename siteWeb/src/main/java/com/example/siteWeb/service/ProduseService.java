@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+/**
+ * Clasa de serviciu responsabilă pentru gestionarea operațiilor legate de entitățile Produse.
+ * Implementează interfața ProduseServiceInterfata.
+ */
 @Service
 public class ProduseService implements ProduseServiceInterfata {
 
@@ -26,27 +29,43 @@ public class ProduseService implements ProduseServiceInterfata {
         this.meniuriRepository = meniuriRepository;
         this.stocuriContract = stocuriContract;
     }
-
+    /**
+     * Returnează toate entitățile Produse.
+     *
+     * @return Lista entităților Produse.
+     */
     public List<Produse> getAllProduse() {
         return produseContract.findAll();
     }
-
+    /**
+     * Returnează un Produs după ID-ul său.
+     *
+     * @param id ID-ul Produsului de recuperat.
+     * @return Entitatea Produsului recuperată, sau null dacă nu este găsită.
+     */
     public Produse getProdusById(int id) {
         return produseContract.findById(id).orElse(null);
     }
-
+    /**
+     * Creează un nou Produs.
+     *
+     * @param produs   Produsul de creat.
+     * @param meniuId  ID-ul Meniului asociat.
+     * @return Entitatea Produsului creat.
+     */
     public Produse createProdus(Produse produs, int meniuId) {
-        // Căutăm meniul în baza de date folosind meniuId
         Meniuri meniu = meniuriRepository.findById(meniuId)
                 .orElseThrow(() -> new RuntimeException("Meniul nu a fost găsit în baza de date."));
-
-        // Setăm meniul asociat produsului
         produs.setMeniu(meniu);
-
-        // Salvăm produsul în baza de date utilizând repository-ul ProduseContract
         return produseContract.save(produs);
     }
-
+    /**
+     * Actualizează un Produs existent.
+     *
+     * @param id            ID-ul Produsului de actualizat.
+     * @param produsDetails Detaliile actualizate ale Produsului.
+     * @return Entitatea Produsului actualizat, sau null dacă nu este găsit.
+     */
     public Produse updateProdus(int id, Produse produsDetails) {
         Produse produs = produseContract.findById(id).orElse(null);
         if (produs != null) {
@@ -58,29 +77,25 @@ public class ProduseService implements ProduseServiceInterfata {
             return null;
         }
     }
-
+    /**
+     * Șterge un Produs după ID-ul său.
+     *
+     * @param id ID-ul Produsului de șters.
+     */
     public void deleteProdus(int id) {
-        // Căutăm produsul în baza de date
+
         Produse produs = produseContract.findById(id).orElse(null);
         if (produs != null) {
-            // Căutăm meniul asociat produsului
             Meniuri meniu = produs.getMeniu();
             if (meniu != null) {
-                // Ștergem meniul asociat produsului
                 meniuriRepository.delete(meniu);
             }
-
-            // Căutăm stocurile asociate produsului
             List<Stocuri> stocuri = produs.getStocuri();
             if (stocuri != null) {
-                // Ștergem fiecare stoc asociat produsului
                 for (Stocuri stoc : stocuri) {
-                    // Ștergem stocul din baza de date
                     stocuriContract.deleteById(stoc.getStoc_id());
                 }
             }
-
-            // Ștergem produsul din baza de date
             produseContract.deleteById(id);
         }
 

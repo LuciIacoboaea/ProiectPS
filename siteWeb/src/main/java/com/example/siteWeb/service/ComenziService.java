@@ -19,12 +19,12 @@ import java.util.Optional;
 public class ComenziService implements ComenziServiceInterfata {
 
     private final ComenziContract comenziContract;
-    private final MeniuriContract meniuriContract; // Adaugăm contractul pentru repository-ul de meniuri
+    private final MeniuriContract meniuriContract;
 
     @Autowired
     public ComenziService(ComenziContract comenziContract, MeniuriContract meniuriContract) {
         this.comenziContract = comenziContract;
-        this.meniuriContract = meniuriContract; // Injectăm repository-ul de meniuri
+        this.meniuriContract = meniuriContract;
     }
 
     /**
