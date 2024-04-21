@@ -235,4 +235,19 @@ public class Restaurante {
         return recenzii;
     }
 
+    public void setStocuri(List<Stocuri> stocuri) {
+        this.stocuri = stocuri;
+    }
+
+    public void setComenzi(List<Comenzi> comenzi) {
+        this.comenzi = comenzi;
+    }
+
+    public void setPromotii(List<Promotii> promotii) {
+        this.promotii = promotii;
+    }
+
+    public void setRecenzii(List<Recenzii> recenzii) {
+        this.recenzii = recenzii;
+    }
 }

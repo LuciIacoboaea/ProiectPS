@@ -161,4 +161,8 @@ public class Produse {
     public List<Stocuri> getStocuri() {
         return stocuri;
     }
+
+    public void setStocuri(List<Stocuri> stocuri) {
+        this.stocuri = stocuri;
+    }
 }
