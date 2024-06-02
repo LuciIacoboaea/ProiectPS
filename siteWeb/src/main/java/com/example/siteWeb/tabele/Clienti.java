@@ -1,5 +1,6 @@
 package com.example.siteWeb.tabele;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class Clienti {
     private String telefon;
     private String email;
     private String parola;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comenzi> comenzi= new ArrayList<>();
 

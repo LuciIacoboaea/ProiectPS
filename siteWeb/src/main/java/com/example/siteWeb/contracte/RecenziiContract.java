@@ -34,4 +34,12 @@ public interface RecenziiContract {
      * @param recenzieId ID-ul recenziei care trebuie ștearsă.
      */
     void deleteById(int recenzieId);
+
+    /**
+     * Returnează o listă de recenzii pentru un anumit restaurant.
+     *
+     * @param restaurantId ID-ul restaurantului.
+     * @return Lista de recenzii pentru restaurantul specificat.
+     */
+    List<Recenzii> findByRestaurantId(int restaurantId);
 }

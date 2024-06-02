@@ -60,4 +60,9 @@ public class RecenziiData implements RecenziiContract {
     public void deleteById(int recenzieId) {
         recenziiRepository.deleteById(recenzieId);
     }
+
+    @Override
+    public List<Recenzii> findByRestaurantId(int restaurantId) {
+        return recenziiRepository.findByRestaurantId(restaurantId);
+    }
 }

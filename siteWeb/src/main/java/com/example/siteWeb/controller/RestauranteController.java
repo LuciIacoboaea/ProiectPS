@@ -1,5 +1,7 @@
 package com.example.siteWeb.controller;
 
+import com.example.siteWeb.service.RecenziiService;
+import com.example.siteWeb.tabele.Recenzii;
 import com.example.siteWeb.tabele.Restaurante;
 import com.example.siteWeb.service.RestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,26 +10,32 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
+
 /**
  * Clasa controller responsabilă pentru gestionarea cererilor HTTP legate de Restaurante.
  * Oferă puncte terminale pentru obținerea, crearea, actualizarea și ștergerea restaurantelor.
  */
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/restaurante")
 public class RestauranteController {
     /**
      * Serviciu pentru manipularea restaurantelor.
      */
     private final RestauranteService restauranteService;
+    private final RecenziiService recenziiService;
     /**
      * Constructor pentru RestauranteController.
+     *
      * @param restauranteService Serviciul pentru manipularea restaurantelor.
+     * @param recenziiService
      */
     @Autowired
-    public RestauranteController(RestauranteService restauranteService) {
+    public RestauranteController(RestauranteService restauranteService, RecenziiService recenziiService) {
         this.restauranteService = restauranteService;
+        this.recenziiService = recenziiService;
     }
     /**
      * Metodă pentru obținerea tuturor restaurantelor.
@@ -87,4 +95,40 @@ public class RestauranteController {
         restauranteService.deleteRestaurantAndAssociatedData(restaurantId);
         return ResponseEntity.ok("Restaurantul și datele asociate au fost șterse cu succes.");
     }
+
+    /**
+     * Caută restaurantele care conțin un anumit șir în nume.
+     *
+     * @param query Șirul de căutare pentru nume.
+     * @return Lista de restaurante care conțin șirul specificat în nume.
+     */
+    /**
+     * Metodă pentru obținerea tuturor numelor restaurantelor.
+     * @return Lista de nume de restaurante.
+     */
+    @GetMapping("/searchByLetter")
+    public ResponseEntity<List<String>> searchRestauranteByLetter(@RequestParam char letter) {
+        List<String> numeRestaurante = restauranteService.getAllRestaurante().stream()
+                .filter(restaurante -> restaurante.getNume().contains(String.valueOf(letter)))
+                .map(Restaurante::getNume)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(numeRestaurante, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/recenzii")
+    public ResponseEntity<List<Recenzii>> getReviewsByRestaurantId(@PathVariable("id") int restaurantId) {
+        List<Recenzii> recenziiList = recenziiService.getReviewsByRestaurantId(restaurantId);
+        if (recenziiList != null && !recenziiList.isEmpty()) {
+            return new ResponseEntity<>(recenziiList, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/{restaurantId}/reviews")
+    public ResponseEntity<Recenzii> createReview(@PathVariable("restaurantId") int restaurantId, @RequestBody Recenzii review) {
+        Recenzii createdReview = recenziiService.createReview(restaurantId, review);
+        return new ResponseEntity<>(createdReview, HttpStatus.CREATED);
+    }
+
 }

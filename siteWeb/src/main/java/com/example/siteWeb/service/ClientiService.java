@@ -101,4 +101,19 @@ public class ClientiService implements ClientiServiceInterfata {
         }
         return null;
     }
+
+    /**
+     * Autentifică un client pe baza email-ului și parolei.
+     *
+     * @param email Email-ul clientului.
+     * @param parola Parola clientului.
+     * @return Clientul autentificat sau null dacă autentificarea eșuează.
+     */
+    public Clienti authenticate(String email, String parola) {
+        Clienti client = clientiContract.findByEmailAndParola(email,parola);
+        if (client != null && client.getParola().equals(parola)) {
+            return client;
+        }
+        return null;
+    }
 }

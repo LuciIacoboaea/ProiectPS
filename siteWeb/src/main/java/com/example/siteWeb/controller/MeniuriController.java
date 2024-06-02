@@ -17,6 +17,7 @@ import java.util.List;
  * Oferă puncte terminale pentru obținerea, crearea, actualizarea și ștergerea meniurilor.
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/meniuri")
 public class MeniuriController {
 
@@ -99,5 +100,11 @@ public class MeniuriController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    @GetMapping("/restaurant/{restaurantId}")
+    public ResponseEntity<List<Meniuri>> getMeniuriByRestaurantId(@PathVariable int restaurantId) {
+        List<Meniuri> meniuri = meniuriService.getAllMeniuriByRestaurant(restaurantId);
+        return ResponseEntity.ok(meniuri);
     }
 }

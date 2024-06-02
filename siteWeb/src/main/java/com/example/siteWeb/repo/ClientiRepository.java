@@ -7,4 +7,11 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ClientiRepository extends JpaRepository<Clienti, Integer> {
+    /**
+     * Returnează un client după adresa de email.
+     *
+     * @param email Adresa de email a clientului căutat.
+     * @return Clientul cu adresa de email specificată sau null dacă nu a fost găsit.
+     */
+    Clienti findByEmailAndParola(String email,String parola);
 }

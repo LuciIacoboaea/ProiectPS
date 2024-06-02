@@ -40,4 +40,12 @@ public interface MeniuriServiceInterfata {
      * @param id ID-ul meniului de șters.
      */
     void deleteMeniu(int id);
+
+    /**
+     * Returnează toate meniurile asociate unui anumit restaurant.
+     * @param restaurantId ID-ul restaurantului pentru care se caută meniurile.
+     * @return Lista de meniuri asociate restaurantului dat.
+     */
+    List<Meniuri> getAllMeniuriByRestaurant(int restaurantId);
+
 }

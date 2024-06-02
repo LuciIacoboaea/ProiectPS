@@ -58,4 +58,9 @@ public class ClientiData implements ClientiContract {
     public void deleteById(int clientId) {
         clientiRepository.deleteById(clientId);
     }
+
+    @Override
+    public Clienti findByEmailAndParola(String email,String parola) {
+        return clientiRepository.findByEmailAndParola(email,parola);
+    }
 }

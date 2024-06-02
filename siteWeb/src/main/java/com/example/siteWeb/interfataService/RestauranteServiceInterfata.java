@@ -41,4 +41,12 @@ public interface RestauranteServiceInterfata {
      * @param restaurantId Id-ul restaurantului care trebuie șters.
      */
     void deleteRestaurantAndAssociatedData(int restaurantId);
+    /**
+     * Caută restaurantele după nume, folosind un șir de căutare.
+     *
+     * @param query Șirul de căutare pentru nume.
+     * @return Lista de restaurante care conțin șirul de căutare în nume.
+     */
+    List<Restaurante> findRestauranteByNumeContaining(String query);
+
 }

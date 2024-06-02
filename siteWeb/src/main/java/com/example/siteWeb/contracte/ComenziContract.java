@@ -35,4 +35,15 @@ public interface ComenziContract {
      * @param comandaId ID-ul comenzii care trebuie ștearsă.
      */
     void deleteById(int comandaId);
+
+    /**
+     * Salvează o listă de comenzi în baza de date.
+     *
+     * @param comenzi Lista de comenzi care trebuie salvate.
+     * @return Lista de comenzi salvate.
+     */
+    List<Comenzi> saveAll(List<Comenzi> comenzi);
+
+    List<Comenzi> findByClientId(int client_Id);
+
 }

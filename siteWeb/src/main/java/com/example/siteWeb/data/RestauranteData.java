@@ -58,4 +58,9 @@ public class RestauranteData implements RestauranteContract {
     public void deleteById(int restaurantId) {
         restauranteRepository.deleteById(restaurantId);
     }
+
+    @Override
+    public List<Restaurante> findByNumeContaining(String query) {
+        return restauranteRepository.findByNumeContainingIgnoreCase(query);
+    }
 }

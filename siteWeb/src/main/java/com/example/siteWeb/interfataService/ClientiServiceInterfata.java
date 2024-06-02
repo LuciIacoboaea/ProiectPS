@@ -49,4 +49,5 @@ public interface ClientiServiceInterfata {
      * @return Clientul actualizat parțial.
      */
     Clienti partiallyUpdateClient(int id, Clienti clientDetails);
+    Clienti authenticate(String email, String parola);
 }

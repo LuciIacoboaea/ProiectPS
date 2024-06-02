@@ -1,5 +1,6 @@
 package com.example.siteWeb.tabele;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -17,6 +18,7 @@ public class Recenzii {
     private int rating;
     private String comentariu;
     private LocalDate data;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurante restaurant;
@@ -156,4 +158,7 @@ public class Recenzii {
     public void setRestaurant(Restaurante restaurant) {
         this.restaurant = restaurant;
     }
+
+
+
 }

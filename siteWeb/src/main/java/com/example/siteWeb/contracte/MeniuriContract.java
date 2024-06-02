@@ -35,4 +35,12 @@ public interface MeniuriContract {
      * @param meniuId ID-ul meniului care trebuie șters.
      */
     void deleteById(int meniuId);
+
+    /**
+     * Returnează o listă de meniuri pentru un anumit restaurant_id.
+     *
+     * @param restaurantId ID-ul restaurantului pentru care se caută meniurile.
+     * @return Lista de meniuri pentru restaurantul specificat.
+     */
+    List<Meniuri> findByRestaurantId(int restaurantId);
 }

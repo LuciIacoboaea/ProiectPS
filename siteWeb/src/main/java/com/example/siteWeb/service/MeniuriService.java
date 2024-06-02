@@ -82,4 +82,9 @@ public class MeniuriService implements MeniuriServiceInterfata {
         meniuriContract.deleteById(id);
     }
 
+    @Override
+    public List<Meniuri> getAllMeniuriByRestaurant(int restaurantId) {
+        return meniuriContract.findByRestaurantId(restaurantId);
+    }
+
 }

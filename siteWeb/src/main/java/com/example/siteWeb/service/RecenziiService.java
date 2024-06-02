@@ -1,8 +1,10 @@
 package com.example.siteWeb.service;
 
 import com.example.siteWeb.contracte.RecenziiContract;
+import com.example.siteWeb.contracte.RestauranteContract;
 import com.example.siteWeb.interfataService.RecenziiInterfataService;
 import com.example.siteWeb.tabele.Recenzii;
+import com.example.siteWeb.tabele.Restaurante;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +15,12 @@ import java.util.List;
 @Service
 public class RecenziiService implements RecenziiInterfataService {
     private final RecenziiContract recenziiContract;
+    private final RestauranteService restauranteService;
 
     @Autowired
-    public RecenziiService(RecenziiContract recenziiContract) {
+    public RecenziiService(RecenziiContract recenziiContract, RestauranteService restauranteService) {
         this.recenziiContract = recenziiContract;
+        this.restauranteService = restauranteService;
     }
 
     /**
@@ -76,4 +80,15 @@ public class RecenziiService implements RecenziiInterfataService {
     public void deleteRecenzie(int id) {
         recenziiContract.deleteById(id);
     }
+
+    public List<Recenzii> getReviewsByRestaurantId(int restaurantId) {
+        return recenziiContract.findByRestaurantId(restaurantId);
+    }
+
+    public Recenzii createReview(int restaurantId, Recenzii review) {
+        Restaurante restaurant = restauranteService.getRestauranteById(restaurantId);
+        review.setRestaurant(restaurant);
+        return recenziiContract.save(review);
+    }
+
 }

@@ -28,7 +28,8 @@ public class Meniuri {
     private String descriere;
 
     private String categorie;
-
+    private double cost;
+    @JsonIgnore
     @OneToMany(mappedBy = "meniu", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comenzi> comenzi = new ArrayList<>();
 
@@ -50,12 +51,13 @@ public class Meniuri {
      * @param categorie Categorie a meniului.
      * @param restaurant Restaurantul asociat meniului.
      */
-    public Meniuri(int meniu_id, String nume, String descriere, String categorie, Restaurante restaurant) {
+    public Meniuri(int meniu_id, String nume, String descriere, String categorie, Restaurante restaurant,double cost) {
         this.meniu_id = meniu_id;
         this.nume = nume;
         this.descriere = descriere;
         this.categorie = categorie;
         this.restaurant = restaurant;
+        this.cost=cost;
     }
 
     public List<Comenzi> getComenzi() {
@@ -166,5 +168,13 @@ public class Meniuri {
                 ", descriere='" + descriere + '\'' +
                 ", categorie='" + categorie + '\'' +
                 '}';
+    }
+
+    public double getCost(){
+        return this.cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 }

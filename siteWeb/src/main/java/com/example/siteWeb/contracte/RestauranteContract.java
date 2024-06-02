@@ -33,4 +33,12 @@ public interface RestauranteContract {
      * @param restaurantId ID-ul restaurantului care trebuie șters.
      */
     void deleteById(int restaurantId);
+
+    /**
+     * Caută restaurantele care conțin un șir specificat în nume.
+     *
+     * @param query Șirul de căutare pentru nume.
+     * @return Lista de restaurante care conțin șirul specificat în nume.
+     */
+    List<Restaurante> findByNumeContaining(String query);
 }

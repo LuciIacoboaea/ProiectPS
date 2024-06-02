@@ -33,4 +33,6 @@ public interface ClientiContract {
      * @param clientId ID-ul clientului care trebuie șters.
      */
     void deleteById(int clientId);
+
+    Clienti findByEmailAndParola(String email,String parola);
 }

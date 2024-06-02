@@ -1,18 +1,24 @@
 package com.example.siteWeb.controller;
 
 import com.example.siteWeb.tabele.Comenzi;
+import com.example.siteWeb.tabele.Meniuri;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.siteWeb.service.ComenziService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 /**
  * Clasă controller responsabilă pentru gestionarea cererilor HTTP legate de Comenzi.
  * Oferă puncte terminale pentru obținerea, crearea, actualizarea și ștergerea comenzilor.
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/comenzi")
 public class ComenziController {
 
@@ -77,5 +83,17 @@ public class ComenziController {
     public ResponseEntity<Void> deleteComanda(@PathVariable int id) {
         comenziService.deleteComanda(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/bulk")
+    public ResponseEntity<List<Comenzi>> createMultipleComenzi(@RequestBody List<Comenzi> comenzi) {
+        List<Comenzi> createdComenzi = comenziService.createMultipleComenzi(comenzi);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdComenzi);
+    }
+
+    @GetMapping("/client/{clientId}/orders")
+    public ResponseEntity<List<Comenzi>> getComenziByClientId(@PathVariable int clientId) {
+        List<Comenzi> comenzi = comenziService.getComenziByClientId(clientId);
+        return ResponseEntity.ok(comenzi);
     }
 }

@@ -47,4 +47,6 @@ public interface ComenziServiceInterfata {
      * @param id Identificatorul comenzii ce urmează să fie ștearsă.
      */
     void deleteComanda(int id);
+
+    List<Comenzi> createMultipleComenzi(List<Comenzi> comenzi);
 }

@@ -107,5 +107,9 @@ public class RestauranteService implements RestauranteServiceInterfata {
             restauranteContract.deleteById(restaurantId);
         }
 }
+    @Override
+    public List<Restaurante> findRestauranteByNumeContaining(String query) {
+        return restauranteContract.findByNumeContaining(query);
+    }
 }
 

@@ -57,4 +57,14 @@ public class ComenziData implements ComenziContract {
     public void deleteById(int comandaId) {
         comenziRepository.deleteById(comandaId);
     }
+
+    @Override
+    public List<Comenzi> saveAll(List<Comenzi> comenzi) {
+        return comenziRepository.saveAll(comenzi);
+    }
+
+    @Override
+    public List<Comenzi> findByClientId(int client_Id) {
+        return comenziRepository.findByClientId(client_Id);
+    }
 }

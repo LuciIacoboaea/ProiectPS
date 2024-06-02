@@ -59,6 +59,7 @@ restaurant_id (INT)
 nume (VARCHAR)
 descriere (VARCHAR)
 categorie (VARCHAR)
+cost (DOUBLE)
 
 4.Tabelul `produse`:
 
@@ -213,6 +214,185 @@ Atribute:
 Relații:
 - Clasa Stocuri are o relație Many-to-One cu clasa Restaurante. Aceasta înseamnă că un stoc este asociat unui singur restaurant, iar un restaurant poate avea mai multe stocuri.
 - De asemenea, clasa Stocuri are o relație Many-to-One cu clasa Produse. Asta înseamnă că un stoc este asociat unui singur produs, iar un produs poate fi asociat cu mai multe stocuri.
+
+## 9.Endpoint-uri noi:
+1.Endpoint-uri pentru Restaurante:
+
+- Căutare Restaurante după Literă
+    - Endpoint: /searchByLetter
+    - Metodă: GET
+    - Descriere:
+    - Acest endpoint permite căutarea restaurantelor ale căror nume conțin o literă specifică.
+    - Parametri:
+letter (char) - Litera după care se face căutarea în numele restaurantelor.
+    - Răspuns:
+HTTP Status 200 (OK): Returnează o listă cu numele restaurantelor care conțin litera specificată.
+
+- Obține Recenzii după ID-ul Restaurantului
+    - Endpoint: /{id}/recenzii
+    - Metodă: GET
+    - Descriere:
+     Acest endpoint returnează toate recenziile pentru un anumit restaurant, identificat prin ID-ul său.
+    - Parametri:
+    id (int) - ID-ul restaurantului pentru care se dorește obținerea recenziilor.   
+    - Răspuns:
+HTTP Status 200 (OK): Returnează o listă de recenzii pentru restaurantul specificat.
+HTTP Status 404 (Not Found): Dacă nu sunt găsite recenzii pentru restaurantul specificat.
+
+- Creează o Recenzie pentru un Restaurant
+    - Endpoint: /{restaurantId}/reviews
+    - Metodă: POST
+    - Descriere:
+Acest endpoint permite crearea unei noi recenzii pentru un restaurant specificat prin ID-ul său.
+    - Parametri: restaurantId (int) - ID-ul restaurantului pentru care se dorește crearea recenziei.
+Corp cerere (Request Body): Un obiect de tip Recenzii care conține detaliile recenziei (comentariu, rating etc.).
+    - Răspuns:
+HTTP Status 201 (Created): Returnează recenzia creată.
+
+2.Endpoint pentru Clienti:
+- Login
+    - Endpoint: /login
+    - Metodă: POST
+    - Descriere: Acest endpoint permite autentificarea unui client pe baza email-ului și parolei.
+    - Corp cerere (Request Body): Un obiect JSON care conține email și parola.
+    - Răspuns:
+HTTP Status 200 (OK): Returnează obiectul Clienti dacă autentificarea este reușită.
+HTTP Status 401 (Unauthorized): Returnează mesajul "Email sau parolă incorecte" dacă autentificarea eșuează.
+
+3.Endpoint-uri pentru Meniuri:
+
+- Obține Meniuri după ID-ul Restaurantului
+    - Endpoint: /restaurant/{restaurantId}
+    - Metodă: GET
+    - Descriere: Acest endpoint returnează toate meniurile pentru un restaurant specificat prin ID-ul său.
+    - Parametri: restaurantId (int) - ID-ul restaurantului pentru care se dorește obținerea meniurilor.
+    - Răspuns:
+HTTP Status 200 (OK): Returnează o listă de obiecte Meniuri pentru restaurantul specificat.
+
+- Creează Comenzi Multiple
+    - Endpoint: /bulk
+    - Metodă: POST
+    - Descriere: Acest endpoint permite crearea mai multor comenzi simultan.
+    - Corp cerere (Request Body): O listă de obiecte Comenzi care conțin detaliile comenzilor.
+    - Răspuns: 
+     HTTP Status 201 (Created): Returnează o listă cu comenzile create.
+
+4.Endpoint pentru Comenzi:
+
+- Obține Comenzi după ID-ul Clientului
+    - Endpoint: /client/{clientId}/orders
+    - Metodă: GET
+    - Descriere: Acest endpoint returnează toate comenzile pentru un client specificat prin ID-ul său.
+    - Parametri: clientId (int) - ID-ul clientului pentru care se dorește obținerea comenzilor.
+    - Răspuns:
+HTTP Status 200 (OK): Returnează o listă de obiecte Comenzi pentru clientul specificat.
+
+## 10.Decuplare + Teste:
+##### Decuplare:
+1. Interfața ClientiContract
+    - Definirea Operațiilor: ClientiContract definește operațiile esențiale pentru gestionarea clienților, cum ar fi găsirea, salvarea, ștergerea și autentificarea clienților.
+    - Flexibilitate: Această interfață oferă flexibilitate prin permiterea mai multor implementări, în funcție de cerințele specifice ale aplicației.
+2. Clasa ClientiData
+    - Implementare Specifică: ClientiData implementează interfața ClientiContract și gestionează operațiile concrete asupra datelor clienților, folosind un repository (ClientiRepository).
+    - Repository Pattern: Utilizează pattern-ul repository pentru a separa logica de acces la date de restul aplicației, facilitând testarea și schimbarea implementărilor fără a afecta alte părți ale aplicației.
+3. Interfața ClientiServiceInterfata
+    - Definirea Serviciilor: ClientiServiceInterfata definește operațiile de nivel serviciu pentru gestionarea clienților, oferind o abstractizare a operațiilor disponibile.
+4. Clasa ClientiService
+    - Implementare Servicii: ClientiService implementează ClientiServiceInterfata și conține logica de afaceri pentru gestionarea clienților. Aceasta interacționează cu ClientiContract pentru a accesa și manipula datele clienților.
+    - Centralizarea Logicii: Concentrează logica de afaceri, cum ar fi crearea, actualizarea, ștergerea și autentificarea clienților, într-un singur loc, facilitând astfel întreținerea și extensibilitatea codului.
+5. Repository-ul ClientiRepository
+    - Acces la Date: ClientiRepository extinde JpaRepository și oferă metode standard pentru operațiile CRUD, precum și metode personalizate, cum ar fi findByEmailAndParola, pentru a facilita autentificarea clienților.
+
+##### Teste:
+1. Testele pentru ClientiService
+Testele pentru ClientiService se concentrează pe verificarea operațiunilor CRUD și a autentificării clienților:
+    - Setup: Metoda setUp inițializează Mockito și injectează mock-ul ClientiContract în instanța de ClientiService.
+    - getAllUsersTest: Verifică dacă metoda getAllClients returnează toți clienții așa cum sunt furnizați de mock-ul ClientiContract.
+Asigură că metoda findAll din ClientiContract este apelată.
+    - testGetClientById: Verifică dacă metoda getClientById returnează clientul corect pentru un ID dat.
+Utilizează Optional.of pentru a simula găsirea unui client și asigură că findById este apelată.
+    - testCreateClient: Testează crearea unui nou client și verifică dacă clientul returnat este cel așteptat.
+Asigură că metoda save din ClientiContract este apelată cu clientul corect.
+    - testUpdateClient:Verifică actualizarea unui client existent.
+Asigură că findById și save sunt apelate corespunzător și că detaliile clientului sunt actualizate corect.
+    - testDeleteClient: Verifică dacă un client este șters corect prin apelarea metodei deleteById.
+    - testPartiallyUpdateClient: Testează actualizarea parțială a unui client și verifică dacă doar câmpurile specificate sunt actualizate.
+Asigură că findById și save sunt apelate corespunzător.
+
+2. Testele pentru RestauranteService
+Testele pentru RestauranteService se concentrează pe operațiunile CRUD și pe gestionarea datelor asociate restaurantelor:
+    - Setup: Metoda setUp inițializează Mockito și injectează mock-urile necesare în instanța de RestauranteService.
+    - testGetAllRestaurante: Verifică dacă metoda getAllRestaurante returnează lista de restaurante așteptată.
+Asigură că findAll din RestauranteContract este apelată.
+    - testGetRestauranteById_ExistingId: Testează recuperarea unui restaurant după ID când acesta există.
+Asigură că findById din RestauranteContract este apelată și returnează restaurantul corect.
+    - testGetRestauranteById_NonExistingId: Verifică comportamentul metodei getRestauranteById atunci când restaurantul nu există.
+Asigură că metoda returnează null când findById nu găsește un restaurant.
+    - testCreateRestaurante: Testează crearea unui nou restaurant și verifică dacă restaurantul creat este cel așteptat.
+Asigură că metoda save din RestauranteContract este apelată cu restaurantul corect.
+    - testUpdateRestaurante: Verifică actualizarea unui restaurant existent.
+Asigură că findById și save sunt apelate corespunzător și că detaliile restaurantului sunt actualizate corect.
+    - testDeleteRestaurantAndAssociatedData: Testează ștergerea unui restaurant și a datelor asociate (recenzii, comenzi, meniuri, promoții).
+Verifică că toate metodele deleteById pentru entitățile asociate sunt apelate corect.
+
+## 11. Interfata Angular:
+
+##### Home component:
+    
+- Componenta home contine imagini + butoane
+- Ca si butoane avem :
+    - Sign up
+    - Log in
+    - About Us
+    - Contact
+
+##### Sign in component:
+
+- Componenta sign in ajuta utilizatorul sa isi creeze un nou cont pentru a putea da comenzi
+- Utilizatorul trebuie sa completeze campurile corect pentru a putea crea un nou cont
+- Se face legatura cu endpoint-ul din backend /post pentru Clienti
+
+
+##### Log in component:
+- Componenta log in ajuta utilizatorul sa aceeseze panoul utilizatorului de unde isi poate alege restaurantele de unde sa dea comanda.
+- Utilizatorul trebuie sa introduca corect email-ul si parola pentru a se putea loga
+- Daca utilizatorul nu are un cont avem un buton Creeaza cont ce il va redirectiona pe utilizator la pagina de sign in
+- Metoda din backend care verifica daca email-ul si parola coincid pentru utilizator
+
+##### User-panel component:
+
+- In aceasta componenta utilizatorul are un search bar unde poate cauta restaurantele
+- Apare o iconita de profil de unde utilizatorul poate sa se deconecteze sa isi vada ultimele comenzi efectuate si detaliile contului 
+- In plus, avem si cateva restaurante afisate si butoane pentru a adauga o recenzie sau pentru a naviga catre pagina de meniuri ale restaurantului
+- Avem metodele din backend care returneaza detaliile unui client, care returneaza o lista cu restaurante pentru a le afisa, metoda pentru a cauta un restaurant dupa nume.
+
+
+##### Meniu component: 
+
+- In aceasta componenta utilizatorul isi adauga meniul in cosul de cumparaturi
+- Poate sa adauge 1 sau mai multe meniuri 
+- Cand apasa pe comanda acum este redirectionat catre pagina utilizatorului si isi poate vizualiza comenzile dand click pe comenzile mele
+- Folosim metodele din backend de adaugare a mai multor meniuri si de a returna tote meniurile pe care un client le-a comandat 
+
+
+##### Admin component : 
+- Aceasta este componenta pentru admin, unde admin-ul sterge adauga sau modifica restaurante deja existente
+- Apar toate restaurantele si le poate edita sau sterge
+- Poate sterge clienti
+- Folosim metodele din backend de sterge actualizare si creare pentru restaurante si clienti 
+
+
+##### Restaurante-page component:
+
+- Aceasta componenta afiseaza toate restaurantele existente 
+- Se pot vizualiza toate recenziile date de clienti pentru fiecare restaurant
+- Legatura cu backend, avem metoda de get care returneaza toate recenziile unui restaurant anume
+
+
+##### Service-uri din frontend:
+- Pentru a face legatura cu backend-ul am folosit service-uri pentru Clienti, Meniuri, Restaurante si Comenzi, in care am scris codul necesar pentru a ne folosi de api-urile create in backend 
+
+
 
 
 

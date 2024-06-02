@@ -85,4 +85,17 @@ public class ComenziService implements ComenziServiceInterfata {
     public void deleteComanda(int id) {
         comenziContract.deleteById(id);
     }
+
+    public List<Comenzi> createMultipleComenzi(List<Comenzi> comenzi) {
+        for (Comenzi comanda : comenzi) {
+            double sumaTotala = comanda.getMeniu().getCost();
+            comanda.setSuma_totala((int) sumaTotala);
+        }
+        comenziContract.saveAll(comenzi);
+        return comenzi;
+    }
+
+    public List<Comenzi> getComenziByClientId(int clientId) {
+        return comenziContract.findByClientId(clientId);
+    }
 }

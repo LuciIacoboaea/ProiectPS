@@ -28,7 +28,7 @@ public class Restaurante {
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Stocuri> stocuri;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "restaurant", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<Comenzi> comenzi = new ArrayList<>();
 

@@ -61,4 +61,9 @@ public class MeniuriData implements MeniuriContract {
     public void deleteById(int meniuId) {
         meniuriRepository.deleteById(meniuId);
     }
+
+    @Override
+    public List<Meniuri> findByRestaurantId(int restaurantId) {
+        return meniuriRepository.findByRestaurantId(restaurantId);
+    }
 }

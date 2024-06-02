@@ -1,5 +1,6 @@
 package com.example.siteWeb.controller;
 
+import com.example.siteWeb.logicaAditionala.LoginRequest;
 import com.example.siteWeb.service.ClientiService;
 import com.example.siteWeb.tabele.Clienti;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Controller-ul pentru gestionarea operațiilor CRUD legate de clienti.
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/clienti")
 public class ClientiController {
 
@@ -119,5 +122,23 @@ public class ClientiController {
     @RequestMapping(method = RequestMethod.OPTIONS)
     public ResponseEntity<Void> getOptions() {
         return ResponseEntity.ok().build();
+    }
+
+    /**
+     * Endpoint pentru autentificare.
+     *
+     * @return Răspunsul HTTP care conține clientul autentificat sau o eroare 401 dacă autentificarea eșuează
+     */
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Map<String, String> loginData) {
+        String email = loginData.get("email");
+        String parola = loginData.get("parola");
+
+        Clienti client = clientiService.authenticate(email, parola);
+        if (client != null) {
+            return ResponseEntity.ok(client);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email sau parolă incorecte");
+        }
     }
 }
